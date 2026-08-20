@@ -56,16 +56,4 @@
 
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
-
-  const footer = document.querySelector("footer");
-  if (footer) {
-    if ("IntersectionObserver" in window) {
-      const footerObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => footer.classList.toggle("in-view", entry.isIntersecting));
-      }, { threshold: 0.1 });
-      footerObserver.observe(footer);
-    } else {
-      footer.classList.add("in-view");
-    }
-  }
 })();
