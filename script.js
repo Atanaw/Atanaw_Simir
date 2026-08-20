@@ -8,10 +8,10 @@
   const navLinks = document.getElementById("navLinks");
   const anchors = [...document.querySelectorAll(".nav-links a")];
 
-  const current = (location.pathname.split("/").pop() || "index.html");
+  const current = (location.pathname.split("/").pop() || "index.html").replace(/\.html$/, "") || "index";
   anchors.forEach(a => {
-    const href = a.getAttribute("href");
-    a.classList.toggle("active", href === current || (current === "" && href === "index.html"));
+    const href = (a.getAttribute("href") || "").replace(/\.html$/, "");
+    a.classList.toggle("active", href === current);
   });
 
   function handleScroll() {
@@ -56,4 +56,16 @@
 
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
+
+  const footer = document.querySelector("footer");
+  if (footer) {
+    if ("IntersectionObserver" in window) {
+      const footerObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => footer.classList.toggle("in-view", entry.isIntersecting));
+      }, { threshold: 0.1 });
+      footerObserver.observe(footer);
+    } else {
+      footer.classList.add("in-view");
+    }
+  }
 })();
